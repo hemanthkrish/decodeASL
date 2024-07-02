@@ -1,4 +1,4 @@
-#decodeASL.
+# decodeASL.
 after logging in
 ![image](https://github.com/hemanthkrish/decodeASL/assets/53926166/9ceb7d3f-97b4-4a1c-af40-61264bc36edb)
 text to sign.
