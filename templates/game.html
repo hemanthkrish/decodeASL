@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Guessing Game</title>
+    <style>
+        .container {
+            display: flex;
+            align-items: center;
+            margin: 50px;
+    padding: 50px;
+        }
+
+        .image-container {
+            flex: 1;
+            margin-right: 20px; /* Adjust margin as needed */
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .feedback-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feedback {
+            margin-bottom: 10px; /* Adjust margin as needed */
+        }
+        img{
+            height: 300px;
+    width: 300px;
+    border-radius: 300px;
+    border-style: solid;
+        }
+        body{
+            font-family: courier;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guess the Image</h1>
+    <div class="container">
+        
+        <div class="image-container">
+            
+            <img src="{{ url_for('static', filename='images/' + image_filename) }}" alt="Image">
+        </div>
+        <div class="feedback-container">
+            <form action="/check_answer" method="post">
+                <label for="user_answer">Your Answer:</label>
+                <input type="text" id="user_answer" name="user_answer">
+                <input type="submit" value="Submit">
+            </form>
+            <p class="feedback">Score: {{ score }}</p>
+            {% if feedback %}
+            <p class="feedback">{{ feedback }}</p>
+            {% endif %}
+        </div>
+    </div>
+    <div id="sliding-line" class="sliding-line"></div>
+    <button onclick="window.location.href='/'">Back</button>
+</body>
+</html>

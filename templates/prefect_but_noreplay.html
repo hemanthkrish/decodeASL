@@ -1,0 +1,51 @@
+<!-- output.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIF Player</title>
+</head>
+<body>
+    <div id="gifContainer"></div>
+
+    <script>
+        // Function to play GIFs according to their specific durations
+        function playGIFs(gifsInfo) {
+            var gifContainer = document.getElementById('gifContainer');
+            var currentIndex = 0;
+
+            function playNext() {
+                if (currentIndex < gifsInfo.length) {
+                    var gifInfo = gifsInfo[currentIndex];
+                    if (gifInfo.path) {
+                        var img = document.createElement('img');
+                        img.src = gifInfo.path;
+                        img.style.width = '200px'; // Adjust size as needed
+                        img.style.height = '200px';
+                        gifContainer.innerHTML = ''; // Clear previous GIF
+                        gifContainer.appendChild(img);
+
+                        // Move to the next GIF after its duration
+                        currentIndex++;
+                        setTimeout(playNext, gifInfo.duration);
+                    } else {
+                        // If GIF path is None, skip to the next GIF
+                        currentIndex++;
+                        playNext();
+                    }
+                }
+            }
+
+            // Start playing the GIFs
+            playNext();
+        }
+        
+        // Extracted GIFs information passed from Flask
+        var gifsInfo = {{ gifs_info | tojson }};
+        
+        // Start playing the GIFs
+        playGIFs(gifsInfo);
+    </script>
+</body>
+</html>

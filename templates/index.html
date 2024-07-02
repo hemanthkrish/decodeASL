@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giphy</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.birds.min.js">
+</head>
+<body id = "element" class="container">
+    
+    <div class = "card">
+
+        <p></p>
+        <h1><img width="50" height="50" src="https://img.icons8.com/ios/50/text.png" alt="text"/>
+            Text to Sign Converter
+            <img width="50" height="50" src="https://img.icons8.com/ios/50/sign-language-interpretation.png" alt="sign-language-interpretation"/>
+        </h1>
+        
+        <form action="/search_gif" method="post">
+            <input type="text" name="words" autocomplete="off" autosave>
+            <button type="submit" value="Search GIFs">Convert</button>
+        </form>
+        {%block signs%}{%endblock%}
+        <button onclick="window.location.href='/game'">Play Game</button>
+        <button onclick="window.location.href='/logout'">Logout</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.birds.min.js"></script>
+
+    <script>
+        VANTA.BIRDS({
+          el: "",
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          scale: 1.00,
+          scaleMobile: 1.00,
+          backgroundColor: 0xffffff
+        })
+        </script>
+    
+    
+</body>
+</html>
+
+

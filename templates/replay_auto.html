@@ -1,0 +1,64 @@
+{% extends "index.html" %}
+{%block signs%}
+    <div id="gifContainer"></div>
+    <button id="restartButton">Replay</button>
+
+    <script>
+        // Function to play GIFs according to their specific durations
+        function playGIFs(gifsInfo) {
+            var gifContainer = document.getElementById('gifContainer');
+            var currentIndex = 0;
+
+            function playNext() {
+                if (currentIndex < gifsInfo.length) {
+                    var gifInfo = gifsInfo[currentIndex];
+                    if (gifInfo.path) {
+                        var img = document.createElement('img');
+                        img.src = gifInfo.path;
+                        img.style.width = '200px'; // Adjust size as needed
+                        img.style.height = '200px';
+                        gifContainer.innerHTML = ''; // Clear previous GIF
+                        gifContainer.appendChild(img);
+
+                        // Move to the next GIF after its duration
+                        currentIndex++;
+                        if (currentIndex < gifsInfo.length) {
+                            setTimeout(playNext, gifInfo.duration);
+                        } else {
+                            // Stop playback after last GIF's duration
+                            setTimeout(stopPlayback, gifInfo.duration);
+                        }
+                    } else {
+                        // If GIF path is None, skip to the next GIF
+                        currentIndex++;
+                        playNext();
+                    }
+                }
+            }
+
+            // Function to stop playback
+            function stopPlayback() {
+                gifContainer.innerHTML = ''; // Clear the container to stop playback
+            }
+
+            // Function to restart playback
+            function restartPlayback() {
+                currentIndex = 0; // Reset currentIndex to start from the beginning
+                playNext(); // Start playing the GIFs again
+            }
+
+            // Start playing the GIFs
+            playNext();
+
+            // Attach event listener to the restart button
+            var restartButton = document.getElementById('restartButton');
+            restartButton.addEventListener('click', restartPlayback);
+        }
+        
+        // Extracted GIFs information passed from Flask
+        var gifsInfo = {{ gifs_info | tojson }};
+        
+        // Start playing the GIFs
+        playGIFs(gifsInfo);
+    </script>
+{%endblock%}
